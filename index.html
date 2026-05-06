@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SONXFGOD – Concert Lubumbashi</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Lato:wght@300;400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -17,26 +17,17 @@
     --white: #f5f5f5;
     --black: #080808;
     --banner-h: 52px;
-    /* Safe area insets for notch/island devices */
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-    --safe-left: env(safe-area-inset-left, 0px);
-    --safe-right: env(safe-area-inset-right, 0px);
   }
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%; /* prevent font inflation on iOS */
-    text-size-adjust: 100%;
-  }
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--black);
     color: var(--white);
     font-family: 'Lato', sans-serif;
     overflow-x: hidden;
-    min-height: 100dvh; /* dynamic viewport height */
-    padding-bottom: var(--safe-bottom);
+    max-width: 480px;
+    margin: 0 auto;
   }
 
   /* ══════════════════════════════
@@ -44,52 +35,31 @@
   ══════════════════════════════ */
   #top-banner {
     position: fixed;
-    top: 0; left: 0; right: 0;
-    height: calc(var(--banner-h) + var(--safe-top));
-    padding-top: var(--safe-top);
-    padding-left: calc(1rem + var(--safe-left));
-    padding-right: calc(1rem + var(--safe-right));
+    top: 0; left: 50%; 
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: var(--banner-h);
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    background: rgba(17, 92, 71, 0.82);
+    background: rgba(13, 90, 70, 0.90);
     border-bottom: 1px solid rgba(17,92,71,0.5);
-    transition:
-      backdrop-filter 0.5s ease,
-      -webkit-backdrop-filter 0.5s ease,
-      background 0.5s ease,
-      border-color 0.5s ease;
-  }
-
-  #top-banner.scrolled {
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    background: rgba(17, 92, 71, 0.92);
-    border-bottom-color: rgba(17,92,71,0.7);
   }
 
   .banner-text {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: clamp(0.58rem, 2.4vw, 0.9rem);
-    letter-spacing: clamp(0.14em, 1vw, 0.38em);
+    font-size: 0.78rem;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     color: #ffffff;
     opacity: 0;
     animation: fadeDown 1s 0.3s forwards;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    transition: filter 0.5s ease, opacity 0.5s ease;
-  }
-
-  #top-banner.scrolled .banner-text {
-    filter: blur(0.3px);
-    opacity: 0.9;
   }
 
   @keyframes fadeDown {
@@ -98,19 +68,24 @@
   }
 
   /* ══════════════════════════════
-     HERO
+     HERO — plein écran, artiste centré
   ══════════════════════════════ */
   #hero {
     position: relative;
-    min-height: 100dvh;
-    padding-top: calc(var(--banner-h) + var(--safe-top));
+    width: 100%;
+    /* hauteur fixe proche du screenshot */
+    height: calc(100vw * 1.25);
+    max-height: 600px;
+    min-height: 380px;
+    padding-top: var(--banner-h);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* mobile: content starts right under banner */
+    justify-content: flex-end;
     overflow: hidden;
   }
 
+  /* fond vert foncé comme dans le screenshot */
   .hero-bg {
     position: absolute;
     inset: 0;
@@ -118,14 +93,14 @@
     background-size: cover;
     background-position: center top;
     filter: brightness(0.55) saturate(1.3);
-    transform: scale(1.05);
-    animation: slowZoom 18s ease-in-out infinite alternate;
-    will-change: transform;
   }
 
-  @keyframes slowZoom {
-    from { transform: scale(1.05); }
-    to   { transform: scale(1.12); }
+  /* fallback couleur si image manquante */
+  .hero-bg-color {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #1a5c47 0%, #0a2e22 55%, #050f09 100%);
+    z-index: 0;
   }
 
   .hero-bg::after {
@@ -133,9 +108,9 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(to bottom,
-      rgba(0,0,0,0.05) 0%,
-      rgba(0,0,0,0.1)  40%,
-      rgba(0,0,0,0.85) 80%,
+      rgba(0,0,0,0)    0%,
+      rgba(0,0,0,0.1)  45%,
+      rgba(0,0,0,0.75) 78%,
       rgba(0,0,0,1)    100%
     );
   }
@@ -146,11 +121,10 @@
     z-index: 5;
     text-align: center;
     width: 100%;
-    padding: 0.3rem clamp(0.75rem, 4vw, 2rem) 0;
-    padding-left: calc(clamp(0.75rem, 4vw, 2rem) + var(--safe-left));
-    padding-right: calc(clamp(0.75rem, 4vw, 2rem) + var(--safe-right));
-    margin-top: 0;
-    margin-bottom: auto;
+    padding: 0;
+    /* colle le bas du bloc au bas du hero */
+    margin-bottom: 0;
+    padding-bottom: clamp(1.2rem, 4vw, 2rem);
     opacity: 0;
     animation: riseUp 1.1s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
   }
@@ -160,44 +134,49 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* photo artiste : occupe toute la largeur du hero */
   .artist-img-wrap {
-    width: min(200px, 44vw);
-    margin: 0 auto 0;
+    width: 100%;
+    margin: 0 auto -1.5rem; /* légère superposition avec le nom */
+    line-height: 0;
   }
 
   .artist-img-wrap img {
     width: 100%;
-    height: auto;
     display: block;
     mix-blend-mode: lighten;
-    filter: drop-shadow(0 0 50px rgba(26,175,134,0.4));
+    filter: drop-shadow(0 0 40px rgba(26,175,134,0.35));
+    object-fit: cover;
+    object-position: top center;
+    /* clamp hauteur pour que la photo ne soit pas trop haute */
+    max-height: calc(100vw * 0.9);
   }
 
   .artist-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2rem, 11vw, 10rem);
-    line-height: 0.85;
-    letter-spacing: 0.04em;
-    background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 60%, #8a8a8a 100%);
+    font-size: clamp(3.6rem, 18vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: 0.03em;
+    background: linear-gradient(180deg, #ffffff 0%, #d0d0d0 55%, #999 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 28px rgba(26,175,134,0.4));
-    margin-top: -0.8rem;
-    word-break: break-word;
+    filter: drop-shadow(0 0 20px rgba(26,175,134,0.3));
+    margin-top: 0;
+    display: block;
   }
 
   .en-concert {
     font-family: 'Oswald', sans-serif;
     font-weight: 600;
-    font-size: clamp(0.7rem, 3vw, 2.2rem);
-    letter-spacing: clamp(0.12em, 1.4vw, 0.44em);
+    font-size: clamp(0.85rem, 3.8vw, 1.4rem);
+    letter-spacing: clamp(0.2em, 1.5vw, 0.42em);
     text-transform: uppercase;
     color: var(--gold);
-    text-shadow: 0 0 20px rgba(201,168,76,0.5);
-    margin-top: 0.05rem;
-    line-height: 1.2;
+    text-shadow: 0 0 16px rgba(201,168,76,0.45);
+    margin-top: 0.25rem;
     display: block;
+    line-height: 1.5;
   }
 
   /* ══════════════════════════════
@@ -207,19 +186,17 @@
     position: relative;
     z-index: 10;
     background: var(--black);
-    padding: clamp(1.8rem, 6vw, 3.5rem) clamp(1rem, 5vw, 2rem) 0;
-    padding-left: calc(clamp(1rem, 5vw, 2rem) + var(--safe-left));
-    padding-right: calc(clamp(1rem, 5vw, 2rem) + var(--safe-right));
+    padding: clamp(1.8rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem) 0;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   .divider {
-    width: min(500px, 88vw);
-    height: 2px;
+    width: 85%;
+    height: 1.5px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin-bottom: clamp(1.2rem, 4vw, 2.5rem);
+    margin-bottom: clamp(1.2rem, 4vw, 2rem);
     opacity: 0;
     animation: fadeIn 1s 1.4s forwards;
   }
@@ -232,14 +209,14 @@
   /* date */
   .date-block {
     text-align: center;
-    margin-bottom: clamp(1.4rem, 5vw, 2.8rem);
+    margin-bottom: clamp(1.5rem, 4.5vw, 2.5rem);
     opacity: 0;
     animation: fadeIn 1s 1.6s forwards;
   }
 
   .date-block .day {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.4rem, 14vw, 9rem);
+    font-size: clamp(4rem, 18vw, 7rem);
     line-height: 0.85;
     color: var(--white);
     letter-spacing: 0.02em;
@@ -250,8 +227,8 @@
   .date-block .time {
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
-    font-size: clamp(0.8rem, 2.8vw, 1.4rem);
-    letter-spacing: 0.3em;
+    font-size: clamp(0.8rem, 3vw, 1.1rem);
+    letter-spacing: 0.35em;
     color: var(--gold);
     margin-top: 0.4rem;
     text-transform: uppercase;
@@ -260,40 +237,35 @@
   /* tickets */
   #tickets {
     width: 100%;
-    max-width: 480px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(0.6rem, 2vw, 1rem);
-    margin-bottom: clamp(1.4rem, 5vw, 3rem);
+    gap: clamp(0.5rem, 2vw, 0.9rem);
+    margin-bottom: clamp(1.2rem, 4vw, 2rem);
     opacity: 0;
     animation: fadeIn 1s 1.9s forwards;
   }
 
   .ticket-card {
     border: 1px solid;
-    padding: clamp(1rem, 4vw, 1.4rem) clamp(0.5rem, 2vw, 1rem);
+    padding: clamp(0.9rem, 3.5vw, 1.4rem) clamp(0.5rem, 2vw, 1rem);
     text-align: center;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s;
     cursor: default;
-    border-radius: 2px;
-    /* Minimum touch target */
-    min-height: 44px;
+    border-radius: 3px;
   }
 
   .ticket-card:hover { transform: translateY(-4px); }
-  /* Active state for touch */
-  .ticket-card:active { transform: scale(0.97); }
 
   .ticket-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    opacity: 0.08;
+    opacity: 0.07;
     transition: opacity 0.3s;
   }
-  .ticket-card:hover::before { opacity: 0.15; }
+  .ticket-card:hover::before { opacity: 0.14; }
 
   .ticket-card.standard { border-color: rgba(26,175,134,0.5); }
   .ticket-card.standard::before { background: var(--green-light); }
@@ -304,7 +276,7 @@
     font-family: 'Oswald', sans-serif;
     font-weight: 600;
     letter-spacing: 0.18em;
-    font-size: clamp(0.6rem, 2vw, 0.8rem);
+    font-size: clamp(0.6rem, 2.2vw, 0.82rem);
     text-transform: uppercase;
     margin-bottom: 0.3rem;
   }
@@ -313,7 +285,7 @@
 
   .ticket-card .price {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2rem, 8vw, 3rem);
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
     line-height: 1;
     color: var(--white);
   }
@@ -321,28 +293,27 @@
   .ticket-card .currency {
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
-    font-size: clamp(0.7rem, 2vw, 1rem);
-    color: rgba(255,255,255,0.6);
+    font-size: clamp(0.72rem, 2.2vw, 0.9rem);
+    color: rgba(255,255,255,0.55);
     margin-top: 0.2rem;
   }
 
   /* venue */
   #venue {
     width: 100%;
-    max-width: 480px;
-    background: rgba(13,122,95,0.12);
-    border: 1px solid rgba(26,175,134,0.25);
-    padding: clamp(1.1rem, 4vw, 2rem) clamp(0.8rem, 4vw, 1.5rem);
-    margin-bottom: clamp(1.2rem, 4vw, 2.5rem);
+    background: rgba(13,122,95,0.10);
+    border: 1px solid rgba(26,175,134,0.22);
+    padding: clamp(1rem, 3.5vw, 1.8rem) clamp(0.8rem, 3.5vw, 1.4rem);
+    margin-bottom: clamp(1.2rem, 4vw, 2rem);
     text-align: center;
     opacity: 0;
     animation: fadeIn 1s 2.1s forwards;
-    border-radius: 2px;
+    border-radius: 3px;
   }
 
   .venue-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.4rem, 6vw, 2.8rem);
+    font-size: clamp(1.6rem, 7vw, 2.8rem);
     letter-spacing: 0.08em;
     color: var(--white);
     margin-bottom: 0.4rem;
@@ -351,8 +322,8 @@
   .venue-detail {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
-    font-size: clamp(0.65rem, 2.2vw, 0.9rem);
-    color: rgba(255,255,255,0.55);
+    font-size: clamp(0.65rem, 2.2vw, 0.85rem);
+    color: rgba(255,255,255,0.5);
     line-height: 1.9;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -365,7 +336,7 @@
 
   /* infoline */
   #infoline {
-    margin-bottom: clamp(2rem, 6vw, 4rem);
+    margin-bottom: clamp(2rem, 6vw, 3.5rem);
     opacity: 0;
     animation: fadeIn 1s 2.3s forwards;
     text-align: center;
@@ -374,30 +345,18 @@
   .infoline-label {
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
-    font-size: 0.72rem;
-    letter-spacing: 0.35em;
+    font-size: 0.68rem;
+    letter-spacing: 0.38em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 0.4rem;
+    color: rgba(255,255,255,0.38);
+    margin-bottom: 0.3rem;
   }
 
   .infoline-number {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.4rem, 5.5vw, 2.2rem);
-    letter-spacing: 0.12em;
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    letter-spacing: 0.14em;
     color: var(--gold);
-    display: inline-block;
-    /* Proper touch target for phone link */
-    padding: 0.4rem 0.8rem;
-    min-height: 44px;
-    line-height: 44px;
-    border-radius: 4px;
-    transition: background 0.2s;
-  }
-  .infoline-number:hover,
-  .infoline-number:focus {
-    background: rgba(201,168,76,0.1);
-    outline: none;
   }
 
   /* bottom bar */
@@ -405,7 +364,6 @@
     width: 100%;
     height: 4px;
     background: linear-gradient(90deg, var(--green-dark), var(--gold), var(--green-dark));
-    margin-bottom: var(--safe-bottom);
   }
 
   /* ══════════════════════════════
@@ -425,126 +383,13 @@
     background: var(--gold-light);
     opacity: 0;
     animation: float linear infinite;
-    will-change: transform, opacity;
   }
 
   @keyframes float {
     0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
-    10%  { opacity: 0.5; }
-    90%  { opacity: 0.25; }
+    10%  { opacity: 0.45; }
+    90%  { opacity: 0.2; }
     100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
-  }
-
-  /* ══════════════════════════════
-     RESPONSIVE BREAKPOINTS
-  ══════════════════════════════ */
-
-  /* ── Tiny phones (< 360px) ── */
-  @media (max-width: 359px) {
-    :root { --banner-h: 44px; }
-    .banner-text { letter-spacing: 0.10em; font-size: 0.54rem; }
-    .artist-img-wrap { width: 82vw; }
-    .artist-name { margin-top: -1.8rem; }
-    #tickets { gap: 0.5rem; }
-    .ticket-card { padding: 0.8rem 0.4rem; }
-  }
-
-  /* ── Small phones (360px – 479px) ── */
-  @media (min-width: 360px) and (max-width: 479px) {
-    .artist-img-wrap { width: 72vw; }
-  }
-
-  /* ── Landscape phones ── */
-  @media (max-height: 500px) and (orientation: landscape) {
-    #hero {
-      min-height: 100dvh;
-      justify-content: center;
-    }
-    .hero-text {
-      margin-bottom: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 0 1.5rem;
-    }
-    .artist-img-wrap {
-      width: min(180px, 28vw);
-      margin: 0;
-      flex-shrink: 0;
-    }
-    .hero-text-copy {
-      text-align: left;
-    }
-    .artist-name {
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      margin-top: 0;
-    }
-    .en-concert {
-      font-size: clamp(0.75rem, 2.5vw, 1.2rem);
-      text-align: left;
-    }
-    /* Compress info section for landscape */
-    #info {
-      padding-top: 1.5rem;
-    }
-    .date-block { margin-bottom: 1rem; }
-    .date-block .day { font-size: clamp(2.8rem, 10vw, 5rem); }
-    #tickets { max-width: 380px; margin-bottom: 1rem; }
-    #venue { margin-bottom: 1rem; padding: 0.9rem 1rem; }
-    #infoline { margin-bottom: 1.5rem; }
-    /* Reduce particles on small screens for perf */
-    .particle { display: none; }
-  }
-
-  /* ── Tablets (600px – 899px) ── */
-  @media (min-width: 600px) {
-    #tickets, #venue { max-width: 500px; }
-    .artist-img-wrap { width: min(380px, 55vw); }
-  }
-
-  /* ── Large tablets / small desktops (900px – 1199px) ── */
-  @media (min-width: 900px) {
-    #info {
-      padding-left: max(3rem, calc(3rem + var(--safe-left)));
-      padding-right: max(3rem, calc(3rem + var(--safe-right)));
-    }
-    .artist-img-wrap { width: min(420px, 42vw); }
-    #hero {
-      justify-content: center;
-    }
-    .hero-text {
-      margin-top: 0;
-      margin-bottom: 5rem;
-      padding-top: 0;
-    }
-    .artist-name { font-size: clamp(4rem, 14vw, 10rem); margin-top: -3.5rem; }
-    .en-concert  { font-size: clamp(1rem, 3.8vw, 2.2rem); }
-    #tickets, #venue { max-width: 520px; }
-  }
-
-  /* ── Full desktop (≥ 1200px) ── */
-  @media (min-width: 1200px) {
-    #tickets, #venue { max-width: 560px; }
-    .artist-img-wrap { width: min(460px, 38vw); }
-    .hero-text { margin-bottom: 6rem; }
-  }
-
-  /* ── Wide screens (≥ 1600px) ── */
-  @media (min-width: 1600px) {
-    .artist-img-wrap { width: 500px; }
-    #tickets, #venue { max-width: 600px; }
-  }
-
-  /* ── Reduce motion for accessibility ── */
-  @media (prefers-reduced-motion: reduce) {
-    .hero-bg { animation: none; transform: scale(1.06); }
-    .hero-text, .divider, .date-block, #tickets, #venue, #infoline {
-      animation: none;
-      opacity: 1;
-    }
-    .banner-text { animation: none; opacity: 1; }
-    .particle { display: none; }
   }
 </style>
 </head>
@@ -556,41 +401,40 @@
 </header>
 
 <!-- floating particles -->
-<div class="particles" id="particles" aria-hidden="true"></div>
+<div class="particles" id="particles"></div>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg" role="img" aria-label="Arrière-plan concert"></div>
+  <div class="hero-bg-color"></div>
+  <div class="hero-bg"></div>
   <div class="hero-text">
     <div class="artist-img-wrap">
-      <img src="SONXFGOD.png" alt="SONXFGOD" loading="eager">
+      <img src="SONXFGOD.png" alt="SONXFGOD">
     </div>
-    <div class="hero-text-copy">
-      <div class="artist-name">SONXFGOD</div>
-      <span class="en-concert">En Concert</span>
-      <span class="en-concert">à Lubumbashi</span>
-    </div>
+    <div class="artist-name">SONXFGOD</div>
+    <span class="en-concert">En Concert</span>
+    <span class="en-concert">à Lubumbashi</span>
   </div>
 </section>
 
 <!-- INFO -->
 <section id="info">
-  <div class="divider" aria-hidden="true"></div>
+  <div class="divider"></div>
 
   <div class="date-block">
     <div class="day">14 <span class="juin">Juin</span></div>
     <div class="time">⏱ 15 h 00</div>
   </div>
 
-  <div id="tickets" role="list" aria-label="Tarifs des billets">
-    <div class="ticket-card standard" role="listitem">
+  <div id="tickets">
+    <div class="ticket-card standard">
       <div class="label">Standard</div>
-      <div class="price">10<sup style="font-size:1.1rem">$</sup></div>
+      <div class="price">10<sup style="font-size:1rem">$</sup></div>
       <div class="currency">USD</div>
     </div>
-    <div class="ticket-card vip" role="listitem">
+    <div class="ticket-card vip">
       <div class="label">VIP</div>
-      <div class="price">20<sup style="font-size:1.1rem">$</sup></div>
+      <div class="price">20<sup style="font-size:1rem">$</sup></div>
       <div class="currency">USD</div>
     </div>
   </div>
@@ -606,17 +450,10 @@
 
   <div id="infoline">
     <div class="infoline-label">Infoline</div>
-    <a href="https://wa.me/243974463199"
-       class="infoline-number"
-       target="_blank"
-       rel="noopener noreferrer"
-       style="text-decoration:none;"
-       aria-label="Contacter via WhatsApp au +243 974 463 199">
-      +243 974 463 199
-    </a>
+    <a href="https://wa.me/243974463199" class="infoline-number" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">+243 974 463 199</a>
   </div>
 
-  <div class="bottom-bar" aria-hidden="true"></div>
+  <div class="bottom-bar"></div>
 </section>
 
 <script>
@@ -626,39 +463,20 @@
     banner.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  // ── Particles — disabled on reduced motion ──
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!prefersReducedMotion) {
-    const container = document.getElementById('particles');
-    const vw = window.innerWidth;
-    // Scale particle count by screen size for performance
-    const count = vw < 360 ? 8 : vw < 480 ? 12 : vw < 768 ? 18 : 28;
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.animationDuration = (8 + Math.random() * 14) + 's';
-      p.style.animationDelay = (Math.random() * 12) + 's';
-      const size = (1 + Math.random() * 2.5) + 'px';
-      p.style.width = size;
-      p.style.height = size;
-      container.appendChild(p);
-    }
+  // ── Particles ──
+  const container = document.getElementById('particles');
+  const count = window.innerWidth < 480 ? 14 : 24;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 14) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    const size = (1 + Math.random() * 2.5) + 'px';
+    p.style.width = size;
+    p.style.height = size;
+    container.appendChild(p);
   }
-
-  // ── Landscape hero layout helper ──
-  function updateHeroLayout() {
-    const heroText = document.querySelector('.hero-text');
-    const isLandscapePhone = window.innerHeight < 500 && window.innerWidth > window.innerHeight;
-    if (isLandscapePhone) {
-      const img = heroText.querySelector('.artist-img-wrap');
-      const copy = heroText.querySelector('.hero-text-copy');
-      if (copy && !copy.parentElement.classList.contains('hero-text')) return;
-      // Already handled by CSS flex layout
-    }
-  }
-  updateHeroLayout();
-  window.addEventListener('resize', updateHeroLayout, { passive: true });
 </script>
 </body>
 </html>
