@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONXFGOD – Concert Lubumbashi</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Lato:wght@300;400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #0d7a5f;
+    --green-light: #1aaf86;
+    --green-dark: #074d3c;
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --white: #f5f5f5;
+    --black: #080808;
+    --banner-h: 52px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ══════════════════════════════
+     FIXED TOP BANNER
+  ══════════════════════════════ */
+  #top-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--banner-h);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(17, 92, 71, 0.82);
+    border-bottom: 1px solid rgba(17,92,71,0.5);
+    transition:
+      backdrop-filter 0.5s ease,
+      -webkit-backdrop-filter 0.5s ease,
+      background 0.5s ease,
+      border-color 0.5s ease;
+  }
+
+  #top-banner.scrolled {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    background: rgba(17, 92, 71, 0.92);
+    border-bottom-color: rgba(17,92,71,0.7);
+  }
+
+  .banner-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.62rem, 2.4vw, 0.9rem);
+    letter-spacing: clamp(0.18em, 1vw, 0.38em);
+    text-transform: uppercase;
+    color: #ffffff;
+    opacity: 0;
+    animation: fadeDown 1s 0.3s forwards;
+    white-space: nowrap;
+    transition: filter 0.5s ease, opacity 0.5s ease;
+  }
+
+  #top-banner.scrolled .banner-text {
+    filter: blur(0.3px);
+    opacity: 0.9;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    padding-top: var(--banner-h);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('BANCKGROUND.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.55) saturate(1.3);
+    transform: scale(1.05);
+    animation: slowZoom 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes slowZoom {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1.12); }
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(0,0,0,0.05) 0%,
+      rgba(0,0,0,0.1)  40%,
+      rgba(0,0,0,0.85) 80%,
+      rgba(0,0,0,1)    100%
+    );
+  }
+
+  /* ── Artist block ── */
+  .hero-text {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    width: 100%;
+    padding: 0 1rem;
+    margin-bottom: clamp(5rem, 12vw, 9rem);
+    opacity: 0;
+    animation: riseUp 1.1s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  @keyframes riseUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .artist-img-wrap {
+    width: min(380px, 74vw);
+    margin: 0 auto 0.4rem;
+  }
+
+  .artist-img-wrap img {
+    width: 100%;
+    display: block;
+    mix-blend-mode: lighten;
+    filter: drop-shadow(0 0 50px rgba(26,175,134,0.4));
+  }
+
+  .artist-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.4rem, 17vw, 10rem);
+    line-height: 0.88;
+    letter-spacing: 0.04em;
+    background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 60%, #8a8a8a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 28px rgba(26,175,134,0.4));
+    margin-top: -3.5rem;
+  }
+
+  .en-concert {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.95rem, 4.2vw, 2.2rem);
+    letter-spacing: clamp(0.18em, 1.8vw, 0.44em);
+    text-transform: uppercase;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201,168,76,0.5);
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ══════════════════════════════
+     INFO SECTION
+  ══════════════════════════════ */
+  #info {
+    position: relative;
+    z-index: 10;
+    background: var(--black);
+    padding: clamp(2rem, 6vw, 3.5rem) clamp(1rem, 5vw, 2rem) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .divider {
+    width: min(500px, 88vw);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: clamp(1.4rem, 4vw, 2.5rem);
+    opacity: 0;
+    animation: fadeIn 1s 1.4s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* date */
+  .date-block {
+    text-align: center;
+    margin-bottom: clamp(1.8rem, 5vw, 2.8rem);
+    opacity: 0;
+    animation: fadeIn 1s 1.6s forwards;
+  }
+
+  .date-block .day {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.8rem, 15vw, 9rem);
+    line-height: 0.85;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .date-block .day span.juin { color: var(--green-light); }
+
+  .date-block .time {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.85rem, 2.8vw, 1.4rem);
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  /* tickets */
+  #tickets {
+    width: 100%;
+    max-width: 480px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.6rem, 2vw, 1rem);
+    margin-bottom: clamp(1.6rem, 5vw, 3rem);
+    opacity: 0;
+    animation: fadeIn 1s 1.9s forwards;
+  }
+
+  .ticket-card {
+    border: 1px solid;
+    padding: clamp(0.9rem, 3vw, 1.4rem) clamp(0.5rem, 2vw, 1rem);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: default;
+    border-radius: 2px;
+  }
+
+  .ticket-card:hover { transform: translateY(-4px); }
+
+  .ticket-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    transition: opacity 0.3s;
+  }
+  .ticket-card:hover::before { opacity: 0.15; }
+
+  .ticket-card.standard { border-color: rgba(26,175,134,0.5); }
+  .ticket-card.standard::before { background: var(--green-light); }
+  .ticket-card.vip { border-color: var(--gold); }
+  .ticket-card.vip::before { background: var(--gold); }
+
+  .ticket-card .label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    font-size: clamp(0.6rem, 2vw, 0.8rem);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .ticket-card.standard .label { color: var(--green-light); }
+  .ticket-card.vip .label { color: var(--gold); }
+
+  .ticket-card .price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 7vw, 3rem);
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .ticket-card .currency {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.2rem;
+  }
+
+  /* venue */
+  #venue {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(13,122,95,0.12);
+    border: 1px solid rgba(26,175,134,0.25);
+    padding: clamp(1.2rem, 4vw, 2rem) clamp(0.8rem, 4vw, 1.5rem);
+    margin-bottom: clamp(1.4rem, 4vw, 2.5rem);
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s 2.1s forwards;
+    border-radius: 2px;
+  }
+
+  .venue-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 6vw, 2.8rem);
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .venue-detail {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.65rem, 2vw, 0.9rem);
+    color: rgba(255,255,255,0.55);
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .venue-detail strong {
+    color: var(--green-light);
+    font-weight: 400;
+  }
+
+  /* infoline */
+  #infoline {
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    opacity: 0;
+    animation: fadeIn 1s 2.3s forwards;
+    text-align: center;
+  }
+
+  .infoline-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.3rem;
+  }
+
+  .infoline-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  /* bottom bar */
+  .bottom-bar {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--green-dark), var(--gold), var(--green-dark));
+  }
+
+  /* ══════════════════════════════
+     PARTICLES
+  ══════════════════════════════ */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold-light);
+    opacity: 0;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10%  { opacity: 0.5; }
+    90%  { opacity: 0.25; }
+    100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+  }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 360px) {
+    .banner-text { letter-spacing: 0.12em; font-size: 0.58rem; }
+    .artist-img-wrap { width: 88vw; }
+    #tickets { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 600px) {
+    #tickets, #venue { max-width: 500px; }
+  }
+
+  @media (min-width: 900px) {
+    #info { padding-left: 3rem; padding-right: 3rem; }
+    .artist-img-wrap { width: min(420px, 45vw); }
+    #hero { justify-content: center; }
+    .hero-text { margin-bottom: 5rem; }
+  }
+
+  @media (min-width: 1200px) {
+    #tickets, #venue { max-width: 540px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FIXED BANNER -->
+<header id="top-banner">
+  <span class="banner-text">VN Évent Présente</span>
+</header>
+
+<!-- floating particles -->
+<div class="particles" id="particles"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-text">
+    <div class="artist-img-wrap">
+      <img src="SONXFGOD.png" alt="SONXFGOD">
+    </div>
+    <div class="artist-name">SONXFGOD</div>
+    <span class="en-concert">En Concert</span>
+    <span class="en-concert">à Lubumbashi</span>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="divider"></div>
+
+  <div class="date-block">
+    <div class="day">14 <span class="juin">Juin</span></div>
+    <div class="time">⏱ 15 h 00</div>
+  </div>
+
+  <div id="tickets">
+    <div class="ticket-card standard">
+      <div class="label">Standard</div>
+      <div class="price">10<sup style="font-size:1.1rem">$</sup></div>
+      <div class="currency">USD</div>
+    </div>
+    <div class="ticket-card vip">
+      <div class="label">VIP</div>
+      <div class="price">20<sup style="font-size:1.1rem">$</sup></div>
+      <div class="currency">USD</div>
+    </div>
+  </div>
+
+  <div id="venue">
+    <div class="venue-name">Salle Elika</div>
+    <div class="venue-detail">
+      <strong>Golf Lido</strong><br>
+      24, Av. Lubembe — Lubumbashi<br>
+      Réf : Ancienne Résidence Kazembe
+    </div>
+  </div>
+
+  <div id="infoline">
+    <div class="infoline-label">Infoline</div>
+    <a href="https://wa.me/243974463199" class="infoline-number" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">+243 974 463 199</a>
+  </div>
+
+  <div class="bottom-bar"></div>
+</section>
+
+<script>
+  // ── Scroll-blur banner ──
+  const banner = document.getElementById('top-banner');
+
+  window.addEventListener('scroll', () => {
+    banner.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Particles ──
+  const container = document.getElementById('particles');
+  const count = window.innerWidth < 480 ? 14 : 28;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 14) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    const size = (1 + Math.random() * 2.5) + 'px';
+    p.style.width = size;
+    p.style.height = size;
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>
