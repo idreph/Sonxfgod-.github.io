@@ -392,27 +392,128 @@
   }
 
   /* ══════════════════════════════
-     RESPONSIVE
+     RESPONSIVE — ALL DEVICES
   ══════════════════════════════ */
-  @media (max-width: 360px) {
-    .banner-text { letter-spacing: 0.12em; font-size: 0.58rem; }
-    .artist-img-wrap { width: 88vw; }
-    #tickets { grid-template-columns: 1fr 1fr; }
+
+  /* ── Tiny phones (< 360px) ── */
+  @media (max-width: 359px) {
+    :root { --banner-h: 44px; }
+    .banner-text { letter-spacing: 0.1em; font-size: 0.55rem; }
+    .artist-img-wrap { width: 90vw; }
+    .artist-name { font-size: 3rem; margin-top: -2rem; }
+    .en-concert { font-size: 0.8rem; letter-spacing: 0.14em; }
+    #tickets { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .ticket-card { padding: 0.8rem 0.4rem; }
+    .date-block .day { font-size: 3.2rem; }
+    #info { padding: 1.5rem 0.75rem 0; }
   }
 
-  @media (min-width: 600px) {
-    #tickets, #venue { max-width: 500px; }
+  /* ── Small phones (360–479px) ── */
+  @media (min-width: 360px) and (max-width: 479px) {
+    .artist-img-wrap { width: 82vw; }
+    .artist-name { font-size: clamp(3.4rem, 18vw, 5rem); margin-top: -3rem; }
+    #tickets { max-width: 100%; }
+    #venue { max-width: 100%; }
+    #info { padding-left: 1rem; padding-right: 1rem; }
   }
 
-  @media (min-width: 900px) {
-    #info { padding-left: 3rem; padding-right: 3rem; }
-    .artist-img-wrap { width: min(420px, 45vw); }
+  /* ── Large phones (480–599px) ── */
+  @media (min-width: 480px) and (max-width: 599px) {
+    .artist-img-wrap { width: 72vw; }
+    .hero-text { margin-bottom: 6rem; }
+    #tickets { max-width: 420px; }
+    #venue { max-width: 420px; }
+  }
+
+  /* ── Tablets portrait (600–767px) ── */
+  @media (min-width: 600px) and (max-width: 767px) {
+    .artist-img-wrap { width: min(360px, 58vw); }
+    .hero-text { margin-bottom: 7rem; }
+    #tickets, #venue { max-width: 520px; }
+    #info { padding: 2.5rem 2rem 0; }
+    .artist-name { font-size: clamp(4rem, 14vw, 7rem); margin-top: -3.5rem; }
+    .en-concert { font-size: clamp(1rem, 3.5vw, 1.6rem); }
+  }
+
+  /* ── Tablets landscape (768–1023px) ── */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    :root { --banner-h: 56px; }
+    .artist-img-wrap { width: min(400px, 50vw); }
+    .hero-text { margin-bottom: 6rem; }
+    #hero { justify-content: flex-end; }
+    #tickets, #venue { max-width: 560px; }
+    #info { padding: 3rem 3rem 0; }
+    .artist-name { font-size: clamp(5rem, 12vw, 8rem); margin-top: -4rem; }
+    .en-concert { font-size: clamp(1.1rem, 3vw, 1.8rem); }
+    .date-block .day { font-size: clamp(5rem, 11vw, 8rem); }
+    .venue-name { font-size: clamp(1.8rem, 4.5vw, 2.8rem); }
+  }
+
+  /* ── Small desktops (1024–1279px) ── */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    :root { --banner-h: 58px; }
     #hero { justify-content: center; }
-    .hero-text { margin-bottom: 5rem; }
+    .hero-text {
+      margin-bottom: 6rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .artist-img-wrap { width: min(440px, 40vw); }
+    .artist-name { font-size: clamp(6rem, 11vw, 9rem); margin-top: -4.5rem; }
+    .en-concert { font-size: clamp(1.2rem, 2.8vw, 2rem); }
+    #info { padding: 3.5rem 4rem 0; }
+    #tickets, #venue { max-width: 560px; }
+    .date-block .day { font-size: clamp(6rem, 10vw, 8.5rem); }
   }
 
-  @media (min-width: 1200px) {
-    #tickets, #venue { max-width: 540px; }
+  /* ── Standard desktops (1280–1599px) ── */
+  @media (min-width: 1280px) and (max-width: 1599px) {
+    :root { --banner-h: 60px; }
+    #hero { justify-content: center; }
+    .hero-text {
+      margin-bottom: 7rem;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .artist-img-wrap { width: min(480px, 36vw); }
+    .artist-name { font-size: clamp(7rem, 10vw, 10rem); margin-top: -5rem; }
+    .en-concert { font-size: clamp(1.3rem, 2.5vw, 2.2rem); }
+    #info {
+      padding: 4rem 6rem 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+    #tickets, #venue { max-width: 580px; }
+    .date-block .day { font-size: clamp(7rem, 9vw, 9rem); }
+  }
+
+  /* ── Large desktops (1600px+) ── */
+  @media (min-width: 1600px) {
+    :root { --banner-h: 64px; }
+    #hero { justify-content: center; }
+    .hero-text {
+      margin-bottom: 8rem;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .artist-img-wrap { width: min(520px, 30vw); }
+    .artist-name { font-size: clamp(8rem, 9vw, 11rem); margin-top: -5.5rem; }
+    .en-concert { font-size: clamp(1.5rem, 2.2vw, 2.4rem); }
+    #info {
+      padding: 5rem 8rem 0;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+    #tickets, #venue { max-width: 620px; }
+    .date-block .day { font-size: clamp(8rem, 9vw, 10rem); }
+    .banner-text { font-size: 1rem; letter-spacing: 0.42em; }
   }
 </style>
 </head>
